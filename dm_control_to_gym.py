@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# -*- coding:UTF-8 -*-
-# File Name : dm_control_wrapper.py
-# Creation Date : 09-10-2018
-# Created By : Jeasine Ma [jeasinema[at]gmail[dot]com]
-
 import glfw
 try:
     glfw.init()
@@ -94,21 +88,3 @@ class Env_DM_Control(object):
 
     def close(self):
         pass
-
-if __name__ == '__main__':
-    max_frame = 1001
-
-    width = 480
-    height = 480
-    video = np.zeros((10001, height, 2 * width, 3), dtype=np.uint8)
-
-    env = Env_DM_Control('swimmer/swimmer6')
-    env.reset()
-    print(env.action_space)
-    print(env.observation_space)
-    while True:
-        video = np.hstack([env.physics.render(height, width, camera_id=0),
-                                            env.physics.render(height, width, camera_id=1)])
-        img = plt.imshow(video)
-        plt.pause(0.01)  # Need min display time > 0.0.
-        plt.draw()

@@ -13,7 +13,6 @@ EPISODES = 1100
 TEST = 10
 
 def obs2state(observation):
-    """Converts observation dictionary to state tensor"""
     l1 = [val.tolist() for val in list(observation.values())]
     l2 = []
     for sublist in l1:
@@ -95,8 +94,7 @@ if __name__ == '__main__':
     n, bins, patches = axs[0].hist(resultLast100Episodes, num_bins, facecolor='blue', alpha=0.5)
     
     axs[1].plot(X, Y)
-     
-   # function to show the plot
+    
     plt.show()
     
     plt.savefig("resultHist3.png")

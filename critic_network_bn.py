@@ -11,18 +11,15 @@ TAU = 0.001
 L2 = 0.01
 
 class CriticNetwork:
-	"""docstring for CriticNetwork"""
 	def __init__(self,sess,state_dim,action_dim):
 		self.time_step = 0
 		self.sess = sess
-		# create q network
 		self.state_input,\
 		self.action_input,\
 		self.q_value_output,\
 		self.net,\
 		self.is_training = self.create_q_network(state_dim,action_dim)
 
-		# create target q network (the same structure with q network)
 		self.target_state_input,\
 		self.target_action_input,\
 		self.target_q_value_output,\
@@ -31,13 +28,11 @@ class CriticNetwork:
 
 		self.create_training_method()
 
-		# initialization 
 		self.sess.run(tf.initialize_all_variables())
 			
 		self.update_target()
 
 	def create_training_method(self):
-		# Define training optimizer
 		self.y_input = tf.placeholder("float",[None,1])
 		weight_decay = tf.add_n([L2 * tf.nn.l2_loss(var) for var in self.net])
 		self.cost = tf.reduce_mean(tf.square(self.y_input - self.q_value_output)) + weight_decay
@@ -45,7 +40,6 @@ class CriticNetwork:
 		self.action_gradients = tf.gradients(self.q_value_output,self.action_input)
 
 	def create_q_network(self,state_dim,action_dim):
-		# the layer size could be changed
 		layer1_size = LAYER1_SIZE
 		layer2_size = LAYER2_SIZE
 
@@ -127,19 +121,4 @@ class CriticNetwork:
 		updates_collections=None,is_training=True, reuse=None,scope=scope_bn,decay=0.9, epsilon=1e-5),
 		lambda: tf.contrib.layers.batch_norm(x, activation_fn =activation, center=True, scale=True,
 		updates_collections=None,is_training=False, reuse=True,scope=scope_bn,decay=0.9, epsilon=1e-5))
-
-'''
-	def load_network(self):
-		self.saver = tf.train.Saver()
-		checkpoint = tf.train.get_checkpoint_state("saved_critic_networks")
-		if checkpoint and checkpoint.model_checkpoint_path:
-			self.saver.restore(self.sess, checkpoint.model_checkpoint_path)
-			print "Successfully loaded:", checkpoint.model_checkpoint_path
-		else:
-			print "Could not find old network weights"
-
-	def save_network(self,time_step):
-		print 'save critic-network...',time_step
-		self.saver.save(self.sess, 'saved_critic_networks/' + 'critic-network', global_step = time_step)
-'''
 		

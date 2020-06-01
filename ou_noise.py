@@ -1,15 +1,6 @@
-# --------------------------------------
-# Ornstein-Uhlenbeck Noise
-# Author: Flood Sung
-# Date: 2016.5.4
-# Reference: https://github.com/rllab/rllab/blob/master/rllab/exploration_strategies/ou_strategy.py
-# --------------------------------------
-
-import numpy as np
 import numpy.random as nr
 
 class OUNoise:
-    """docstring for OUNoise"""
     def __init__(self,action_dimension,mu=0, theta=0.15, sigma=0.2):
         self.action_dimension = action_dimension
         self.mu = mu
