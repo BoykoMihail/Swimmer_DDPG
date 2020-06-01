@@ -1,4 +1,3 @@
-import filter_env
 from ddpg import *
 import gc
 from collections import deque
